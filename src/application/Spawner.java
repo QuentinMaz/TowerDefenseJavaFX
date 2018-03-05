@@ -40,9 +40,9 @@ public class Spawner {
 	}
 
 	public void spawn() {
-		int newEnemy = 2 * Main.numeroVague + 1;
+		int newEnemy = 2 * Main.numeroVague + 2;
 		for(int i = 0; i < newEnemy; i++) {
-			Enemy temp = new Enemy(-40*nbEnemy, 125, 100);
+			Enemy temp = new Enemy(-40 * nbEnemy, 125, 100);
 			enemyList.add(temp);
 			group.getChildren().add(enemyList.get(this.nbEnemy));
 			(this.nbEnemy)++;
@@ -60,6 +60,7 @@ public class Spawner {
 	public void translate(Path path) {
 		final LongProperty lastUpdate = new SimpleLongProperty(0);
 		final LongProperty fps = new SimpleLongProperty(0);
+		final LongProperty projectilePersistence = new SimpleLongProperty(0);
 		
 		new AnimationTimer() {
 			public void handle(long now) {
@@ -74,16 +75,21 @@ public class Spawner {
 							destroy(i);		// on le retire la liste et on supprime son affichage
 						}
 					}
+					fps.setValue(now);
 				}
 				// si la différence avec la lastUpdate est supérieure à 1s, on boucle et on update lastUpdate
 				if(now - lastUpdate.getValue() >= 500_000_000) {		
 					for(int i = 0; i < nbTower; i++) {
-						for(int j = 0; j < nbEnemy; j++) {
-							towerList.get(i).attack(enemyList.get(j));
-						}
+						towerList.get(i).attack(enemyList);
 					}
-					fps.setValue(now);
 					lastUpdate.setValue(now);
+				}
+				// on clean les projectiles toutes les 2 secondes
+				if(now - projectilePersistence.getValue() >= 2_000_000_000) {		
+					for(int i = 0; i < nbTower; i++) {
+						towerList.get(i).cleanProjectile();
+					}
+					projectilePersistence.setValue(now);
 				}
 			}
 		}.start();
