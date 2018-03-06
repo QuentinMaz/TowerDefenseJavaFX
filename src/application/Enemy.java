@@ -84,6 +84,10 @@ public class Enemy extends Parent {
 		return this.vie;
 	}
 	
+	public String getOrientation() {
+		return this.orientation;
+	}
+
 	public void setVie(double life) {
 		this.vie -= life;
 		this.lifeBar.setWidth((this.vie/100)*(2*body.getRadius()));

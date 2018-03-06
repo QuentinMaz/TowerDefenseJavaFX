@@ -13,7 +13,7 @@ public class GameController {
 	@SuppressWarnings("unused")
 	private Scene scene;
 	
-	private Spawner spawner;
+	private Manager manager;
 	
 	@FXML
 	private Path line;
@@ -33,18 +33,25 @@ public class GameController {
 		this.group = grp;
 	}
 	
-	public void setSpawner(Spawner sp) {
-		this.spawner = sp;
+	public void setLooper(Manager sp) {
+		this.manager = sp;
 	}
 	
 	@FXML
 	public void butTest() {
-		spawner.spawn();
-		spawner.translate(line);
+		manager.spawn();
+		manager.translate(line);
 	}
 	
 	@FXML
 	public void clicked() {
-		spawner.towerPose(path);
+		Singleton.getInstance().towerPose(path);
+	}
+	
+	@FXML
+	public void towerContent() {
+		for(Tower t : Singleton.getInstance().getTowerList()) {
+			System.out.println(t.toString());
+		}
 	}
 }

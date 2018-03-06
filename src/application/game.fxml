@@ -45,7 +45,8 @@
       <ButtonBar prefHeight="120.0" prefWidth="1280.0" style="-fx-background-color: gray; -fx-border-color: blue;" translateY="600.0">
          <buttons>
             <Button mnemonicParsing="false" onAction="#butTest" prefHeight="75.0" prefWidth="75.0" text="GO!" />
-            <Button mnemonicParsing="false" onMouseClicked="#clicked" text="MOVE!" />
+            <Button mnemonicParsing="false" onMouseClicked="#clicked" text="Tour" />
+            <Button mnemonicParsing="false" onAction="#towerContent" text="TourContent" />
          </buttons>
       </ButtonBar>
    </children>

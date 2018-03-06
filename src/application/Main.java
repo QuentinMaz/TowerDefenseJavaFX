@@ -10,13 +10,14 @@ import javafx.scene.Scene;
 public class Main extends Application {
 	
 	public static int numeroVague = 0;
-	private Spawner spawner;
+	private Manager manager;
 
 	public void start(Stage primaryStage) throws Exception {
 		
 		// ---------------- Base -----------------------------------------
 		
 		primaryStage.setTitle("Tower Defense");
+		this.manager = new Manager();
 
 		// ---------------- GameScene --------------------------------------------
 		
@@ -27,11 +28,12 @@ public class Main extends Application {
 		Group root = new Group(stepGame);			// on crée un Group à partir de notre Region... ca marche...
 		Scene game = new Scene(root);				// on ajoute la scene non pas à stepGame mais a root :)
 		
-		this.spawner = new Spawner(root);
+		Singleton.getInstance().setGroup(root);
+		
 		gameController.setGroup(root);
 		gameController.setScene(game);
-		gameController.setSpawner(spawner);
-
+		gameController.setLooper(manager);	
+		
 		// ---------------- MenuScene --------------------------------------------
 		
 		Controller menuController = new Controller(primaryStage, game);
@@ -44,6 +46,7 @@ public class Main extends Application {
 		primaryStage.setScene(menu); // on démarre avec la scène du menu
 		
 		// --------------- Show() -----------------------------------------------
+		
 		primaryStage.show();
 	}
 	
